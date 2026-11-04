@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "dawn_identity",
+  "version": "${version}",
+  "name": "Dawn Identity Toggle",
+  "description": "A multiplayer-screen toggle for the client brand label and Dawn client-info cookie response.",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.codex.dawnidentity.DawnIdentityClient"
+    ]
+  },
+  "mixins": [
+    "dawn_identity.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
+

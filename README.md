@@ -43,4 +43,3 @@ This project uses the custom **Dawn Identity Fabric Attribution License (DIF-1.0
 
 This project is independent and is not affiliated with or endorsed by Dawn, InPvP, Mojang Studios, or Microsoft.
 
-

@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "If you use this project or materially rely on it as a reference, please credit 2q9e."
+title: "Dawn Identity Fabric"
+authors:
+  - name: "2q9e"
+version: 1.0.0
+url: "https://github.com/2q9e/dawn-identity-fabric"
