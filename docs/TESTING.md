@@ -1,23 +1,28 @@
 # Testing record
 
+Verification run on Windows 11 with Eclipse Temurin JDK 25.0.5 and Gradle 9.8.2.
+
 ## Automated checks
 
-The following command completed successfully with Java 21:
+The following completed successfully after the version modules were added:
 
-    .\gradlew.bat clean test build
+    .\gradlew.bat clean build --stacktrace
 
-The build compiled and remapped the Fabric mod JAR for Minecraft 1.21.11. JUnit checks verify:
-- the Dawn cookie encodes a version byte followed by the two modified-UTF strings and no trailing bytes;
-- a missing config defaults to OFF;
-- ON/OFF config values survive save/reload.
+All six version modules compiled, packaged, and passed their test tasks: 1.21.4, 1.21.11, 26.1, 26.2, 26.3, and the experimental 26.4 Snapshot 7 module. The shared JUnit checks cover the cookie byte layout, the missing-config default, and config save/reload behavior. The tests run in each module's target toolchain.
 
-## Client startup
+The first run exposed that the committed Gradle wrapper JAR was not a valid JAR. It was replaced with the official Gradle 9.8.2 wrapper JAR before the successful build.
 
-Gradle's runClient task started Minecraft 1.21.11 with Fabric Loader 0.18.6 and loaded dawn_identity 1.0.0 with Fabric API 0.141.6+1.21.11. The startup log showed the Mixin subsystem initialized and no mixin application error.
+## Development client startup
 
-## UI check and remaining verification
+`runClient` was launched for each of the six modules. Every client log:
 
-The development client reached the Multiplayer Server Selection screen and displayed the Dawn ID toggle. It showed ON and the run config contained enabled=true. The computer-use click test was interrupted by Escape before I could toggle it, so the button action itself is not verified.
+- identifies the expected Minecraft and Fabric Loader versions;
+- lists `dawn_identity` as loaded;
+- reaches resource reload and sound engine initialization;
+- contains no Fabric mixin application failure or fatal crash.
 
-A Paper server or other live server was not used, so the exact server-observed brand/cookie response and multiplayer login with the emulation enabled remain unverified. Screen-resize behavior also remains unverified. The official Dawn ref value is not published in the public documentation; this build uses release as its self-declared ref and may not satisfy a server with stricter checks.
+The 26.x development clients also print Windows Performance Library counter warnings from Minecraft's OSHI system profiler. The game logs continue through startup. Development sessions also report a Realms authorization warning because the development profile does not have a production Microsoft session; neither warning stopped the client.
 
+## Not covered
+
+These checks do not include clicking the toggle in each client, joining a server, or verifying the server-observed brand and cookie response. Those still need a manual multiplayer check. The 26.4 build targets Snapshot 7, whose runtime Minecraft ID is `26.4-alpha.7`; it is experimental and can break as the snapshot changes.
