@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "dev.codex.dawnidentity.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "ClientBrandRetrieverMixin",
+    "ClientCommonNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -4,7 +4,18 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
+    plugins {
+        id 'net.fabricmc.fabric-loom-remap' version '1.19-SNAPSHOT'
+        id 'net.fabricmc.fabric-loom' version '1.19-SNAPSHOT'
+    }
 }
 
-rootProject.name = 'dawn-identity-emulator'
+rootProject.name = 'dawn-identity-fabric'
 
+include 'mc1_21_4', 'mc1_21_11', 'mc26_1', 'mc26_2', 'mc26_3', 'mc26_4_snapshot_7'
+project(':mc1_21_4').projectDir = file('versions/1.21.4')
+project(':mc1_21_11').projectDir = file('versions/1.21.11')
+project(':mc26_1').projectDir = file('versions/26.1')
+project(':mc26_2').projectDir = file('versions/26.2')
+project(':mc26_3').projectDir = file('versions/26.3')
+project(':mc26_4_snapshot_7').projectDir = file('versions/26.4-snapshot-7')

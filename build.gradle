@@ -1,48 +1,39 @@
 plugins {
-    id 'fabric-loom' version "${loom_version}"
-    id 'maven-publish'
+    id 'base'
 }
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-    archivesName = project.archives_base_name
+tasks.register('testAll') {
+    group = 'verification'
+    description = 'Runs the unit tests for every Minecraft version module.'
+    dependsOn(subprojects.collect { "${it.path}:test" })
 }
 
-repositories {
-    mavenCentral()
+tasks.register('test') {
+    group = 'verification'
+    description = 'Runs all version-module unit tests.'
+    dependsOn('testAll')
 }
 
-dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    testImplementation platform('org.junit:junit-bom:5.12.2')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+tasks.register('buildAll') {
+    group = 'build'
+    description = 'Builds every Minecraft version module.'
+    dependsOn(subprojects.collect { "${it.path}:build" })
 }
 
-processResources {
-    inputs.property 'version', project.version
-
-    filesMatching('fabric.mod.json') {
-        expand 'version': project.version
-    }
+tasks.register('cleanAll') {
+    group = 'build'
+    description = 'Cleans every Minecraft version module.'
+    dependsOn(subprojects.collect { "${it.path}:clean" })
 }
 
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
-    withSourcesJar()
+tasks.named('check') {
+    dependsOn('testAll')
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.release = 21
+tasks.named('build') {
+    dependsOn('buildAll')
 }
 
-test {
-    useJUnitPlatform()
+tasks.named('clean') {
+    dependsOn('cleanAll')
 }
-

@@ -1,0 +1,55 @@
+plugins {
+    id 'net.fabricmc.fabric-loom-remap'
+    id 'maven-publish'
+}
+
+def moduleProperties = new Properties()
+file('gradle.properties').withInputStream { moduleProperties.load(it) }
+moduleProperties.each { key, value -> project.ext.set(key.toString(), value.toString()) }
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = "${project.archives_base_name}-${project.minecraft_version}"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.12.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sourceSets {
+    main.java.srcDir(rootProject.file('common/src/main/java'))
+    test.java.srcDir(rootProject.file('common/src/test/java'))
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(project.java_version.toInteger())
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = project.java_version.toInteger()
+}
+
+test {
+    useJUnitPlatform()
+}

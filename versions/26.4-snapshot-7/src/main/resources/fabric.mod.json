@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "dawn_identity",
+  "version": "${version}",
+  "name": "Dawn Client Spoofer",
+  "description": "Unofficial experimental client-side build for Minecraft 26.4 Snapshot 7; sends self-declared Dawn identity values when enabled.",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.codex.dawnidentity.DawnIdentityClient"
+    ]
+  },
+  "mixins": [
+    "dawn_identity.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "minecraft": "26.4-alpha.7",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

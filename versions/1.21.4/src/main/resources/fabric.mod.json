@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "dawn_identity",
+  "version": "${version}",
+  "name": "Dawn Client Spoofer",
+  "description": "An unofficial multiplayer-screen toggle for self-declared Dawn brand and client-info cookie values.",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.codex.dawnidentity.DawnIdentityClient"
+    ]
+  },
+  "mixins": [
+    "dawn_identity.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
