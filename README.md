@@ -1,5 +1,7 @@
 # Dawn Client Spoofer
 
+Dawn Client Spoofer is an unofficial Fabric compatibility test mod for Minecraft client identity. Its persistent toggle lets you compare ordinary client identification with the emulated Dawn identity on new connections.
+
 An unofficial, client-side Fabric mod with a persistent ON/OFF toggle on the Multiplayer Server Selection screen. When enabled, it sends the self-declared client brand `Dawn` and responds to the documented `dawn:client_info` cookie request with version `1`, brand `Dawn`, and ref `release`. When disabled, it uses the normal client brand and returns a null response to that cookie request.
 
 The toggle is saved in `config/dawn-identity.properties`. A change applies to new server connections.
